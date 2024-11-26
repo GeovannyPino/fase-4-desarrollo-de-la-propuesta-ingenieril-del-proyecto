@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Transferencias</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #010143;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Encabezado */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #3F3F98;
+            color: white;
+            height: 180px;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        .logo {
+            height: 170px;
+            padding: 20px;
+        }
+
+        .header-title {
+            text-align: center;
+            font-weight: bold;
+            font-size: 50px;
+            flex: 1;
+        }
+
+
+        /* Contenido */
+        .content {
+            padding-top: 120px;
+            text-align: center;
+        }
+
+        table {
+            margin: 0 auto;
+            width: 80%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            color: black;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4a3c84;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .no-data {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: lightgray;
+        }
+
+        h2 {
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Encabezado -->
+    <header class="header">
+        <img class="logo" src="escudo_valledupar-removebg-preview.png" alt="Logo Izquierdo">
+        <h1 class="header-title">Historial de Transferencias</h1>
+        <img class="logo" src="escudo_valledupar-removebg-preview.png" alt="Logo Derecho">
+    </header>
+
+    <!-- Contenido principal -->
+    <section class="content">
+        <h2>Transferencias Realizadas</h2>
+        <div id="historial-container">
+            <table id="tabla-historial">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Número de Cuenta</th>
+                        <th>Monto Enviado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Los datos serán agregados dinámicamente aquí -->
+                </tbody>
+            </table>
+            <p id="no-datos" class="no-data" style="display: none;">No hay transferencias registradas.</p>
+        </div>
+    </section>
+
+    <script>
+        // Función para cargar el historial desde localStorage
+        function cargarHistorial() {
+            const tablaCuerpo = document.querySelector("#tabla-historial tbody");
+            const noDatosMensaje = document.getElementById("no-datos");
+
+            // Obtener los datos almacenados en localStorage
+            const historial = JSON.parse(localStorage.getItem("historialTransferencias")) || [];
+
+            if (historial.length === 0) {
+                noDatosMensaje.style.display = "block";
+                tablaCuerpo.innerHTML = ""; // Asegurarnos de que la tabla esté vacía
+            } else {
+                noDatosMensaje.style.display = "none";
+                tablaCuerpo.innerHTML = ""; // Limpiar cualquier dato previo
+
+                // Agregar cada transferencia como una fila en la tabla
+                historial.forEach((transferencia) => {
+                    const fila = document.createElement("tr");
+                    fila.innerHTML = `
+                        <td>${transferencia.nombre}</td>
+                        <td>${transferencia.numeroCuenta}</td>
+                        <td>${transferencia.monto}</td>
+                    `;
+                    tablaCuerpo.appendChild(fila);
+                });
+            }
+        }
+
+        // Cargar el historial al cargar la página
+        window.onload = cargarHistorial;
+    </script>
+</body>
+
+</html>

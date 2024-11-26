@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Registro</title>
+</head>
+<body>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+        
+        // Configuración de Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCklA4KmsFDM8KLX3XfAfqF8vGGpKfJhaM",
+            authDomain: "fase-4-9a295.firebaseapp.com",
+            projectId: "fase-4-9a295",
+            storageBucket: "fase-4-9a295.firebasestorage.app",
+            messagingSenderId: "240346542936",
+            appId: "1:240346542936:web:7c6edb733b1343930e2b2d",
+            measurementId: "G-5WRMRXHETZ"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Función para crear cuenta
+        const form = document.querySelector("form");
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            const email = form.usuario.value;
+            const password = form.contraseña.value;
+
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    // Redirigir al login o dashboard
+                    window.location.href = "index.html"; // Cambiar a la URL correspondiente
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    alert(errorMessage);
+                });
+        });
+    </script>
+
+    <div class="login-container">
+        <h2>Crear cuenta</h2>
+
+        <form>
+            <input type="email" class="input-field" name="usuario" placeholder="Correo electrónico" required>
+            <input type="password" class="input-field" name="contraseña" placeholder="Contraseña" id="password" required>
+            <button type="submit" class="input-field" style="background-color: #007BFF; color: white;">Registrarse</button>
+            <a href="index.html" class="register-btn">Ya tengo una cuenta</a>
+        </form>
+    </div>
+
+    <script>
+        function togglePassword() {
+            var passwordField = document.getElementById('password');
+            var checkBox = document.querySelector('input[type="checkbox"]');
+            if (checkBox.checked) {
+                passwordField.type = 'text';
+            } else {
+                passwordField.type = 'password';
+            }
+        }
+    </script>
+</body>
+</html>

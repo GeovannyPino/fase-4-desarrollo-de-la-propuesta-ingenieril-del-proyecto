@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Recuperar Contraseña</title>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Recuperar Contraseña</h2>
+        <form id="passwordResetForm">
+            <input type="email" class="input-field" id="email" placeholder="Correo electrónico" required>
+            <button type="submit" class="input-field" style="background-color: #007BFF; color: white;">Enviar enlace</button>
+        </form>
+        <p id="message"></p>
+        <a href="index.html" class="register-btn">Volver al inicio de sesión</a>
+    </div>
+
+    <script type="module">
+        // Importar las funciones necesarias de Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+        import { getAuth, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+
+        // Configuración de Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCklA4KmsFDM8KLX3XfAfqF8vGGpKfJhaM",
+            authDomain: "fase-4-9a295.firebaseapp.com",
+            projectId: "fase-4-9a295",
+            storageBucket: "fase-4-9a295.firebasestorage.app",
+            messagingSenderId: "240346542936",
+            appId: "1:240346542936:web:7c6edb733b1343930e2b2d",
+            measurementId: "G-5WRMRXHETZ"
+        };
+
+        // Inicializar Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Manejar envío del formulario de recuperación
+        document.getElementById('passwordResetForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const messageElement = document.getElementById('message');
+
+            // Enviar correo de recuperación
+            sendPasswordResetEmail(auth, email)
+                .then(() => {
+                    messageElement.style.color = 'green';
+                    messageElement.textContent = 'Enlace de recuperación enviado. Por favor revisa tu correo.';
+                })
+                .catch((error) => {
+                    messageElement.style.color = 'red';
+                    if (error.code === 'auth/user-not-found') {
+                        messageElement.textContent = 'El correo ingresado no está registrado.';
+                    } else {
+                        messageElement.textContent = 'Hubo un error. Intenta nuevamente.';
+                    }
+                });
+        });
+    </script>
+</body>
+</html>

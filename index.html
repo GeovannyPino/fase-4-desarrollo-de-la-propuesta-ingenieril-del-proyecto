@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Login</title>
+</head>
+
+<body>
+    <!-- Encabezado fijo en la parte superior -->
+    <section class="nombre">
+        <header class="header">
+            <!-- Logo izquierdo -->
+            <img class="logo" src="escudo_valledupar-removebg-preview.png" alt="Logo">
+            <!-- Título del encabezado -->
+            <h1 class="header-title">Secretaría de Hacienda Municipal</h1>
+            <!-- Logo derecho -->
+            <img class="logo" src="escudo_valledupar-removebg-preview.png" alt="Logo">
+        </header>
+    </section>
+
+    <!-- Contenedor principal del formulario de inicio de sesión -->
+    <div class="login-container">
+        <h2>Iniciar sesión</h2>
+
+        <!-- Formulario de inicio de sesión -->
+        <form>
+            <!-- Campo para el correo electrónico -->
+            <input type="email" class="input-field" name="usuario" placeholder="Correo electrónico" required>
+
+            <!-- Campo para la contraseña -->
+            <input type="password" class="input-field" name="contraseña" placeholder="Contraseña" id="password"
+                required>
+
+            <!-- Opción para mostrar/ocultar la contraseña -->
+            <label class="checkbox-label">
+                <input type="checkbox" onclick="togglePassword()"> Ver contraseña
+            </label>
+
+            <!-- Enlace para recuperar contraseña -->
+            <a href="recuperarC.html" class="forgot-password">¿Olvidaste tu contraseña?</a>
+
+            <!-- Botón para iniciar sesión -->
+            <button type="submit" class="input-field" style="background-color: #007BFF; color: white;">Iniciar
+                sesión</button>
+
+            <!-- Enlace para registrar una nueva cuenta -->
+            <a href="registro.html" class="register-btn">Crear una cuenta</a>
+        </form>
+    </div>
+
+    <script>
+        // Función para mostrar/ocultar la contraseña
+        function togglePassword() {
+            var passwordField = document.getElementById('password'); // Seleccionar el campo de contraseña
+            var checkBox = document.querySelector('input[type="checkbox"]'); // Seleccionar el checkbox
+            // Cambiar entre 'text' y 'password' según el estado del checkbox
+            passwordField.type = checkBox.checked ? 'text' : 'password';
+        }
+    </script>
+
+    <script type="module">
+        // Importar las funciones necesarias de Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+
+        // Configuración del proyecto Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCklA4KmsFDM8KLX3XfAfqF8vGGpKfJhaM",
+            authDomain: "fase-4-9a295.firebaseapp.com",
+            projectId: "fase-4-9a295",
+            storageBucket: "fase-4-9a295.firebasestorage.app",
+            messagingSenderId: "240346542936",
+            appId: "1:240346542936:web:7c6edb733b1343930e2b2d",
+            measurementId: "G-5WRMRXHETZ"
+        };
+
+        // Inicializar la aplicación de Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Manejar el envío del formulario
+        const form = document.querySelector("form"); // Seleccionar el formulario
+        form.addEventListener("submit", (e) => {
+            e.preventDefault(); // Prevenir el envío por defecto del formulario
+
+            // Obtener valores del correo y contraseña ingresados
+            const email = form.usuario.value;
+            const password = form.contraseña.value;
+
+            // Autenticar al usuario con Firebase
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Redirigir si la autenticación es exitosa
+                    window.location.href = "inicio.html";
+                })
+                .catch((error) => {
+                    // Mostrar mensaje de error en caso de fallo
+                    alert(error.message);
+                });
+        });
+    </script>
+</body>
+
+</html>

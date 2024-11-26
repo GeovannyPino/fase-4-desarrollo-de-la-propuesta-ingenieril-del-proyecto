@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Consignación</title>
+    <!-- Enlace al archivo CSS para estilos -->
+    <link rel="stylesheet" href="envia.css">
+</head>
+
+<body>
+    <!-- Encabezado con logo y título -->
+    <header class="header">
+        <img class="logo" src="escudo_valledupar-removebg-preview.png" alt="Logo">
+        <h1 class="header-title">Secretaría de Hacienda Municipal</h1>
+        <img class="logo" src="escudo_valledupar-removebg-preview.png" alt="Logo">
+    </header>
+
+    <!-- Sección principal del formulario -->
+    <section class="content">
+        <div class="container">
+            <h2>Consignación</h2>
+            <!-- Formulario de consignación -->
+            <form id="form-consignacion">
+                <!-- Campo para el nombre del receptor -->
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" placeholder="Nombre del receptor" required>
+                </div>
+
+                <!-- Selección del tipo de identificación -->
+                <div class="form-group">
+                    <label for="tipo-id">Tipo de Identificación</label>
+                    <select id="tipo-id" name="tipo-id" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="cc">Cédula de Ciudadanía</option>
+                        <option value="ti">Tarjeta de Identidad</option>
+                        <option value="ce">Cédula de Extranjería</option>
+                        <option value="pasaporte">Pasaporte</option>
+                    </select>
+                </div>
+
+                <!-- Campo para el número de identificación -->
+                <div class="form-group">
+                    <label for="numero-id">Número de Identificación</label>
+                    <input type="text" id="numero-id" name="numero-id" placeholder="Número de identificación" required>
+                </div>
+
+                <!-- Selección del tipo de cuenta -->
+                <div class="form-group">
+                    <label for="tipo-cuenta">Tipo de Cuenta</label>
+                    <select id="tipo-cuenta" name="tipo-cuenta" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="ahorros">Ahorros</option>
+                        <option value="corriente">Corriente</option>
+                    </select>
+                </div>
+
+                <!-- Campo para el número de cuenta -->
+                <div class="form-group">
+                    <label for="numero-cuenta">Número de Cuenta</label>
+                    <input type="text" id="numero-cuenta" name="numero-cuenta" placeholder="Ingresa el número de cuenta" required>
+                </div>
+
+                <!-- Campo para el monto a enviar -->
+                <div class="form-group">
+                    <label for="monto">Monto a Enviar</label>
+                    <input type="number" id="monto" name="monto" placeholder="Ingresa el monto" required>
+                </div>
+
+                <!-- Botón de envío -->
+                <div class="form-group">
+                    <button type="button" onclick="confirmarEnvio()">Enviar</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Script para confirmar y registrar transferencias -->
+    <script>
+        function confirmarEnvio() {
+            // Confirmar la intención del usuario
+            const confirmar = confirm("¿Está seguro de querer hacer la transferencia?");
+            if (confirmar) {
+                // Obtener los datos del formulario
+                const nombre = document.getElementById("nombre").value;
+                const numeroCuenta = document.getElementById("numero-cuenta").value;
+                const monto = document.getElementById("monto").value;
+
+                // Crear el objeto de transferencia con los datos
+                const transferencia = {
+                    nombre,
+                    numeroCuenta,
+                    monto
+                };
+
+                // Obtener el historial existente del localStorage o inicializar vacío
+                const historial = JSON.parse(localStorage.getItem("historialTransferencias")) || [];
+
+                // Agregar la nueva transferencia al historial
+                historial.push(transferencia);
+
+                // Guardar el historial actualizado en localStorage
+                localStorage.setItem("historialTransferencias", JSON.stringify(historial));
+
+                // Confirmar el éxito de la operación
+                alert("¡Envío exitoso!");
+                window.location.href = "inicio.html"; // Redirigir al inicio
+            } else {
+                // Mostrar mensaje si el usuario decide revisar los datos
+                alert("Por favor, revise los datos.");
+            }
+        }
+    </script>
+</body>
+
+</html>

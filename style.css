@@ -1,0 +1,89 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #010143;
+}
+.login-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+h2 {
+    text-align: center;
+}
+.input-field {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.checkbox-label {
+    font-size: 14px;
+}
+.forgot-password,
+.register-btn {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+}
+.register-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    width: 90%;
+    text-align: center;
+}
+.register-btn:hover {
+    background-color: #45a049;
+}
+.forgot-password {
+    font-size: 14px;
+    color: #007BFF;
+    text-decoration: none;
+}
+.forgot-password:hover {
+    text-decoration: underline;
+}
+/* Estilo del encabezado */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #3F3F98;
+    color: white;
+    height: 180px;
+    position: fixed; /* Fija el encabezado */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Asegura que esté por encima del resto */
+}
+
+.logo {
+    height: 170px;
+    padding: 20px;
+}
+
+.header-title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 50px;
+    flex: 1;
+}
+
+.login-container {
+    margin-top: 200px; /* Para que el contenido no quede cubierto por el header */
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
